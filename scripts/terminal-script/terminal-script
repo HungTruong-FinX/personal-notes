@@ -1,1 +1,4 @@
 kill -9 $(lsof -t -i:5003)
+
+export SONAR_TOKEN=squ_1a732466da0a7c8e50ed01ac0aa34f6c131c510b
+bash sonar.sh

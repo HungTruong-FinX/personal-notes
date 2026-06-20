@@ -21,3 +21,8 @@ FileMetadata tạo xong thì lưu ở đâu, làm sao để get ra
 5. Document server là S3? documentId là presigned url để connect S3 bên phía nuclent hay phải tương tác như thế nào?
 
 => Là bất cứ resource nào
+
+
+Fix support update draft everytime
+
+Fix errorCode and errorDescription

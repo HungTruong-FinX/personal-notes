@@ -8,3 +8,5 @@ SELECT unnest(enum_range(NULL::event_type));
         GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO db_cluster_viewer;
     </sql>
 </changeSet>
+
+DROP DATABASE payment_batches WITH (FORCE);
