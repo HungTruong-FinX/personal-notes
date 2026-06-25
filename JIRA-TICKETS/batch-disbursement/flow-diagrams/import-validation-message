@@ -1,0 +1,55 @@
+@startuml
+title Unsupported File Type Validation Flow
+
+actor Client
+participant "PaymentBatchService" as Service
+participant "FileService" as FileService
+participant "FileValidationDispatcher" as Dispatcher
+participant "LendingDisbursementFileValidator" as Validator
+participant "FileValidationResult" as Result
+participant "TransactionValidationMessage" as Message
+participant "MessageSource" as MessageSource
+participant "TransactionBatchService" as BatchService
+
+Client -> Service: init(batch)
+
+Service -> FileService: getMetadata(documentUri)
+FileService --> Service: FileMetadata(mimeType = text/csv)
+
+Service -> Service: initBatchInfo(batch)
+Service -> Dispatcher: validateHeader(savedBatch, fileMetadata)
+
+Dispatcher -> Validator: validateHeader(batch, metadata)
+Validator -> Validator: validateMimeType(metadata)
+
+alt MIME type is not Excel
+    Validator -> Validator: getMimeTypeName(text/csv)
+    Validator -> Result: "invalid(\nIMPORT_VALIDATION_FAILED,\nUNSUPPORTED_FILETYPE,\n'Unsupported file reader: text/csv',\n'text/csv'\n)"
+    Result --> Validator: FileValidationResult
+    Validator --> Dispatcher: FileValidationResult
+    Dispatcher --> Service: FileValidationResult
+end
+
+Service -> Service: failedStatus = IMPORT_VALIDATION_FAILED
+Service -> Service: validationMessage = UNSUPPORTED_FILETYPE
+Service -> Service: batch.setStatus(IMPORT_VALIDATION_FAILED)
+Service -> Service: batch.setErrorCode("1")
+
+Service -> Message: "toLocalizedString(messageSource,\ntransactionType,\nresult.messageArgs())"
+
+Message -> Message: getMessageKey(transactionType)
+Message -> MessageSource: "getMessage(\n'LENDING_DISBURSEMENT_TRANSACTION_VALIDATION_1',\n['text/csv'],\nVI\n)"
+MessageSource --> Message: "Định dạng file text/csv không hỗ trợ."
+
+Message -> MessageSource: "getMessage(\n'LENDING_DISBURSEMENT_TRANSACTION_VALIDATION_1',\n['text/csv'],\nEN\n)"
+MessageSource --> Message: "The file format text/csv is not supported."
+
+Message --> Service: LocalizedString
+
+Service -> Service: batch.setErrorDescription(localizedString)
+Service -> BatchService: save(batch)
+BatchService --> Service: saved batch
+
+Service --> Client: "throw IllegalArgumentException(\n'Unsupported file reader: text/csv'\n)"
+
+@enduml
