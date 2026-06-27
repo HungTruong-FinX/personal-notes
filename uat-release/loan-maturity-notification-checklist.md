@@ -16,3 +16,15 @@ https://github.com/GalaxyFinX/loan-management-service/pull/248
 - short-term: Done
 
 => Done
+
+4. Kafka topic: {{env}}.account_service.account-events
+
+=> Done
+
+5. Template 
+
+=> Done
+
+6. PMS 
+
+=> Done

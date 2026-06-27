@@ -49,3 +49,5 @@ Draft failed: B2606230000000261
 Wrong mime type file (APPLICATION/ZIP): https://backoffice.dev.vikkibank.io/v1/assets/1/mda_ph26JkgwUOPGy6WPeC4Kwux
 
 Tika mime type: https://backoffice.dev.vikkibank.io/v1/assets/1/mda_ULfcx2HsbDfry09a8RkVifA
+
+Valid data with error: https://backoffice.dev.vikkibank.io/v1/assets/1/mda_OjE50evXZmi1380s8u6sw7N
