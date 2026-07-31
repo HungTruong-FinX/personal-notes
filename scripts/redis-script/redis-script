@@ -1,1 +1,5 @@
 KEYS "*customer_loan*"
+
+del partner-integration-service::VIKKI_BANK::FCC_LENDING_BATCH_DISBURSEMENT::service-token
+
+keys **transaction::latch::fcc-disbursement_**

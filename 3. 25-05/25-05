@@ -1,7 +1,0 @@
-1. Add %marker to log4j2-spring.xml - Done
-2. Remove sit topic - Done
-3. Fix object mapper - Done
-4. Use AlertingLogger - Done
-5. New custom exception extends the AlertingException - Done
-5. Test if we see ALERT prefix when send got error
-6. Remove default value from topic after testing okay

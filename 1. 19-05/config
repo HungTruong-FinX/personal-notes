@@ -1,8 +1,0 @@
-Host bastion.nonprod
-    Hostname bastion-01.nonprod.galaxyfinx.in
-    Port 22
-    User hung.truong
-Host *.nonprod.galaxyfinx.in
-    Port 22
-    User hung.truong
-    ProxyCommand ssh -q -W %h:%p bastion.nonprod

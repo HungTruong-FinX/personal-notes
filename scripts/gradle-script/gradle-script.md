@@ -77,3 +77,16 @@ com.finx.lending.sdk:orchestration:localMaven
 Then the consuming services will not pick it up unless you temporarily change their `libs.versions.toml` to `localMaven`.
 
 So for your current setup, publishing with `-Pversion=1.0.0` and `-Pversion=2.0.0` is the least disruptive path.
+
+## After published to localMaven
+
+Sometimes, we need to put this in main build.gradle so that it looks for localMaven build with higher priority
+
+configurations.configureEach {
+    resolutionStrategy.eachDependency {
+        if (requested.group == 'com.finx.platform') {
+            useVersion('localMaven')
+            because('Use locally published platform-kit artifacts during development')
+        }
+    }
+}
