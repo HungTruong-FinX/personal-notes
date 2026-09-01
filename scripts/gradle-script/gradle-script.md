@@ -82,6 +82,7 @@ So for your current setup, publishing with `-Pversion=1.0.0` and `-Pversion=2.0.
 
 Sometimes, we need to put this in main build.gradle so that it looks for localMaven build with higher priority
 
+```toml
 configurations.configureEach {
     resolutionStrategy.eachDependency {
         if (requested.group == 'com.finx.platform') {
@@ -90,3 +91,4 @@ configurations.configureEach {
         }
     }
 }
+```
