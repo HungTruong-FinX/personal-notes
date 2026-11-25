@@ -62,7 +62,33 @@ services:
     volumes:
       - redis-data:/data
 
+  dynamodb-data-init:
+    image: busybox:1.36
+    user: "0:0"
+    command: ["sh", "-c", "chown -R 1000:1000 /data"]
+    volumes:
+      - dynamodb-data:/data
+
+  dynamodb:
+    image: amazon/dynamodb-local:2.5.2
+    container_name: dynamodb
+    depends_on:
+      dynamodb-data-init:
+        condition: service_completed_successfully
+    command: ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "./data"]
+    working_dir: /home/dynamodblocal
+    ports:
+      - "8000:8000"
+    volumes:
+      - dynamodb-data:/home/dynamodblocal/data
+    healthcheck:
+      test: ["CMD-SHELL", "test -w /home/dynamodblocal/data && curl -sS --max-time 2 -o /dev/null http://localhost:8000/"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
 volumes:
   kafka-data:
   postgres-data:
+  dynamodb-data:
   redis-data:

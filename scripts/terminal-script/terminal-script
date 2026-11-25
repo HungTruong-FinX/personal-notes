@@ -2,3 +2,5 @@ kill -9 $(lsof -t -i:8082)
 
 export SONAR_TOKEN=squ_1a732466da0a7c8e50ed01ac0aa34f6c131c510b
 bash sonar.sh
+
+GTW-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjY2MzkyNDc5In0.MOCK_SIGNATURE_FOR_TESTING
